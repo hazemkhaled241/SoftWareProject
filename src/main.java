@@ -6,6 +6,7 @@ public class main {
  //driver.addDriver();
 DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
 dataBaseSystem.addAdmin();
+        System.out.println("test");
 
     }
 }
