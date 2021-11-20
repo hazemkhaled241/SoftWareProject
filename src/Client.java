@@ -1,8 +1,8 @@
 public class Client extends User {
    Boolean clientStatus=true;
     DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
-    public Client(String userName, String email, String password) {
-        super(userName, email, password);
+    public Client(String userName, String password) {
+        super(userName, password);
     }
 
     public Boolean getStatus() {

@@ -1,7 +1,7 @@
 public class Admin extends User {
 DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
-    public Admin(String userName, String email, String password) {
-        super(userName, email, password);
+    public Admin(String userName, String password) {
+        super(userName, password);
     }
 public void suspendClient(Integer index){
         dataBaseSystem.clients.get(index-1).setStatus(false);
@@ -25,8 +25,6 @@ public void suspendClient(Integer index){
         dataBaseSystem.pendingDrivers.remove(index-1);
 
     }
-
-
 
 
 }
