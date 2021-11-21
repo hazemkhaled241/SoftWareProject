@@ -71,17 +71,64 @@ public class DataBaseSystem {
 
     }
 
-    public void showPendingRequests() {
+
+public boolean showPendingRequests(){
+    if (pendingDrivers.isEmpty())
+    {
+        System.out.println(" There are no pending requests ");
+        return false;
+    }
+    else {
         for (int i = 0; i < pendingDrivers.size(); i++) {
-            System.out.print(i + 1);
-            System.out.print(pendingDrivers.get(i).getUserName() + " ");
+            System.out.print(i+1+ "-" +pendingDrivers.get(i).getUserName() + " ");
             System.out.print(pendingDrivers.get(i).getPassword() + " ");
             System.out.print(pendingDrivers.get(i).getEmail() + " ");
             System.out.print(pendingDrivers.get(i).nationalId + " ");
             System.out.println(pendingDrivers.get(i).license + " ");
             System.out.println("\n");
         }
+        return true ;
     }
+}
+
+    public boolean showClientsList()
+    {
+        if (clients.isEmpty())
+        {
+            System.out.println(" There are no clients yet ");
+            return false;
+        }
+        else {
+            for (int i = 0; i < clients.size(); i++) {
+                System.out.print(i+1 + "-" +clients.get(i).getUserName() + " ");
+                System.out.print(clients.get(i).getEmail() + " ");
+                System.out.println(clients.get(i).getStatus() + "\n");
+            }
+            return true;
+        }
+    }
+
+    public boolean showActiveDrivers(){
+        if (activeDrivers.isEmpty())
+        {
+            System.out.println(" There are no drivers yet ");
+            return false;
+        }
+        else {
+            for (int i = 0; i < activeDrivers.size(); i++) {
+                if (activeDrivers.get(i).getDriverStatus().equals(true)) {
+                    System.out.print(i+1 + "-" +activeDrivers.get(i).getUserName() + " ");
+                    System.out.print(activeDrivers.get(i).getPassword() + " ");
+                    System.out.print(activeDrivers.get(i).getEmail() + " ");
+                    System.out.print(activeDrivers.get(i).nationalId + " ");
+                    System.out.println(activeDrivers.get(i).license + " ");
+                    System.out.println("\n");
+                }
+            }
+            return true;
+        }
+    }
+
 
     public void matchRidesWithDrivers() {
         for (int i = 0; i < activeDrivers.size(); i++) {
@@ -94,10 +141,19 @@ public class DataBaseSystem {
         }
     }
 
-    public void showMatchedRides(Driver driver) {
+    public void showMatchedRides(Driver driver) { // show matched rides to a specific driver
         for (int i = 0; i < driver.requestedRides.size(); i++) {
             System.out.println(i + 1 + "-" + driver.requestedRides.get(i));
         }
     }
+    public void addRideRequest(Ride ride){
+        rideRequests.add(ride);
+    }
+    public void showDriverFavouritePlaces(Driver driver){
+        for(int i=0;i<driver.favouriteArea.size();i++){
+            System.out.println(i+1 + "-" + driver.favouriteArea.get(i));
+        }
+    }
+
 
 }

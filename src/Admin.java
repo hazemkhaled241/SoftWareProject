@@ -3,11 +3,12 @@ DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
     public Admin(String userName, String password) {
         super(userName, password);
     }
-public void suspendClient(Integer index){
-        dataBaseSystem.clients.get(index-1).setStatus(false);
 
-}
-    public void activateClient(Integer index){
+    public void suspendClient(Integer index){
+            dataBaseSystem.clients.get(index-1).setStatus(false);
+
+    }
+    public void unSuspendClient(Integer index){
         dataBaseSystem.clients.get(index-1).setStatus(true);
 
     }
@@ -15,7 +16,7 @@ public void suspendClient(Integer index){
         dataBaseSystem.activeDrivers.get(index-1).setDriverStatus(false);
 
     }
-    public void activateDriver(Integer index){
+    public void unSuspendDriver(Integer index){
         dataBaseSystem.activeDrivers.get(index-1).setDriverStatus(true);
 
     }
