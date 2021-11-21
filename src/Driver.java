@@ -6,6 +6,7 @@ public class Driver extends User {
     String license;
     Boolean available = true;
     ArrayList<String> favouriteArea ;
+    ArrayList<Ride> requestedRides ;
     public Driver(String userName, String password, String nationalId, String license) {
         super(userName, password);
         this.nationalId = nationalId;
@@ -31,6 +32,7 @@ public class Driver extends User {
     public void addFavouriteArea(String place){
         favouriteArea.add(place);
     }
+
 
 
 }

@@ -51,7 +51,7 @@ public class DataBaseSystem {
                     return true;
                 }
             }
-        } else if (user.getClass().equals(Admin.class)){ //admin
+        } else if (user.getClass().equals(Admin.class)) { //admin
             for (int i = 0; i < currAdmins.size(); i++) {
                 if (currAdmins.get(i).getUserName().equals(user.getUserName())
                         && currAdmins.get(i).getPassword().equals(user.getPassword())
@@ -70,15 +70,33 @@ public class DataBaseSystem {
         dataBaseSystem.currAdmins.add(new Admin("moataz", "123456"));
 
     }
-    public void showPendingRequests(){
-        for(int i=0;i<pendingDrivers.size();i++){
-            System.out.print(i+1);
-            System.out.print( pendingDrivers.get(i).getUserName() + " ");
-            System.out.print( pendingDrivers.get(i).getPassword() + " ");
-            System.out.print( pendingDrivers.get(i).getEmail() + " ");
-            System.out.print( pendingDrivers.get(i).nationalId + " ");
-            System.out.println( pendingDrivers.get(i).license + " ");
+
+    public void showPendingRequests() {
+        for (int i = 0; i < pendingDrivers.size(); i++) {
+            System.out.print(i + 1);
+            System.out.print(pendingDrivers.get(i).getUserName() + " ");
+            System.out.print(pendingDrivers.get(i).getPassword() + " ");
+            System.out.print(pendingDrivers.get(i).getEmail() + " ");
+            System.out.print(pendingDrivers.get(i).nationalId + " ");
+            System.out.println(pendingDrivers.get(i).license + " ");
             System.out.println("\n");
+        }
+    }
+
+    public void matchRidesWithDrivers() {
+        for (int i = 0; i < activeDrivers.size(); i++) {
+            for (int j = 0; j < rideRequests.size(); j++) {
+                Boolean driverSource = activeDrivers.get(i).favouriteArea.contains(rideRequests.get(j).source);
+                if (driverSource) {
+                    activeDrivers.get(i).requestedRides.add(rideRequests.get(j));
+                }
+            }
+        }
+    }
+
+    public void showMatchedRides(Driver driver) {
+        for (int i = 0; i < driver.requestedRides.size(); i++) {
+            System.out.println(i + 1 + "-" + driver.requestedRides.get(i));
         }
     }
 
