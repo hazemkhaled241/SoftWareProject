@@ -5,8 +5,8 @@ public class Driver extends User {
     String nationalId;
     String license;
     Boolean available = true;
-    ArrayList<String> favouriteArea ;
-    ArrayList<Ride> requestedRides ;
+    ArrayList<String> favouriteArea=new ArrayList<>() ;
+    ArrayList<Ride> requestedRides=new ArrayList<>() ;
     public Driver(String userName, String password, String nationalId, String license) {
         super(userName, password);
         this.nationalId = nationalId;
@@ -16,10 +16,10 @@ public class Driver extends User {
         super(userName,password);
 
     }
-    public Boolean getAvailable() {
+    public Boolean getIsAvailable() {
         return available;
     }
-    public void setAvailable(Boolean available) {
+    public void setIsAvailable(Boolean available) {
         this.available = available;
     }
 
@@ -33,6 +33,13 @@ public class Driver extends User {
         favouriteArea.add(place);
     }
 
+    public ArrayList<String> getFavouriteArea() {
+        return favouriteArea;
+    }
+
+    public ArrayList<Ride> getRequestedRides() {
+        return requestedRides;
+    }
 
 
 }

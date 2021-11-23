@@ -1,11 +1,11 @@
 public class Admin extends User {
-DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
+    DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
     public Admin(String userName, String password) {
         super(userName, password);
     }
 
     public void suspendClient(Integer index){
-            dataBaseSystem.clients.get(index-1).setStatus(false);
+        dataBaseSystem.clients.get(index-1).setStatus(false);
 
     }
     public void unSuspendClient(Integer index){
@@ -21,7 +21,7 @@ DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
 
     }
     public void acceptDriverRequest(Integer index){
-       dataBaseSystem.pendingDrivers.get(index-1).setDriverStatus(true);
+        dataBaseSystem.pendingDrivers.get(index-1).setDriverStatus(true);
         dataBaseSystem.activeDrivers.add( dataBaseSystem.pendingDrivers.get(index-1));
         dataBaseSystem.pendingDrivers.remove(index-1);
 

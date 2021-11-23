@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBaseSystem {
     ArrayList<Ride> rideRequests = new ArrayList<>();
@@ -72,24 +74,24 @@ public class DataBaseSystem {
     }
 
 
-public boolean showPendingRequests(){
-    if (pendingDrivers.isEmpty())
-    {
-        System.out.println(" There are no pending requests ");
-        return false;
-    }
-    else {
-        for (int i = 0; i < pendingDrivers.size(); i++) {
-            System.out.print(i+1+ "-" +pendingDrivers.get(i).getUserName() + " ");
-            System.out.print(pendingDrivers.get(i).getPassword() + " ");
-            System.out.print(pendingDrivers.get(i).getEmail() + " ");
-            System.out.print(pendingDrivers.get(i).nationalId + " ");
-            System.out.println(pendingDrivers.get(i).license + " ");
-            System.out.println("\n");
+    public boolean showPendingRequests(){
+        if (pendingDrivers.isEmpty())
+        {
+            System.out.println(" There are no pending requests ");
+            return false;
         }
-        return true ;
+        else {
+            for (int i = 0; i < pendingDrivers.size(); i++) {
+                System.out.print(i+1+ "-" +pendingDrivers.get(i).getUserName() + " ");
+                System.out.print(pendingDrivers.get(i).getPassword() + " ");
+                System.out.print(pendingDrivers.get(i).getEmail() + " ");
+                System.out.print(pendingDrivers.get(i).nationalId + " ");
+                System.out.println(pendingDrivers.get(i).license + " ");
+                System.out.println("\n");
+            }
+            return true ;
+        }
     }
-}
 
     public boolean showClientsList()
     {
@@ -131,28 +133,34 @@ public boolean showPendingRequests(){
 
 
     public void matchRidesWithDrivers() {
+
         for (int i = 0; i < activeDrivers.size(); i++) {
+            boolean driverSource =false;
             for (int j = 0; j < rideRequests.size(); j++) {
-                Boolean driverSource = activeDrivers.get(i).favouriteArea.contains(rideRequests.get(j).source);
+                driverSource=activeDrivers.get(i).getFavouriteArea().contains(rideRequests.get(j).getSource());
                 if (driverSource) {
-                    activeDrivers.get(i).requestedRides.add(rideRequests.get(j));
+                    activeDrivers.get(i).getRequestedRides().add(rideRequests.get(j));
                 }
             }
         }
     }
 
     public void showMatchedRides(Driver driver) { // show matched rides to a specific driver
-        for (int i = 0; i < driver.requestedRides.size(); i++) {
-            System.out.println(i + 1 + "-" + driver.requestedRides.get(i));
+        for (int i = 0; i < driver.getRequestedRides().size(); i++) {
+            System.out.println(i + 1 + "-" + driver.getRequestedRides().get(i));
         }
     }
-    public void addRideRequest(Ride ride){
+    public void addRideRequest(Ride ride ,Client client){
+        ride.setClient(client);
         rideRequests.add(ride);
+
+
     }
     public void showDriverFavouritePlaces(Driver driver){
         for(int i=0;i<driver.favouriteArea.size();i++){
             System.out.println(i+1 + "-" + driver.favouriteArea.get(i));
         }
+
     }
 
 

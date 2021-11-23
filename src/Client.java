@@ -1,5 +1,5 @@
 public class Client extends User {
-   Boolean clientStatus=true;
+    Boolean clientStatus=true;
     DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
     public Client(String userName, String password) {
         super(userName, password);
@@ -13,10 +13,6 @@ public class Client extends User {
         this.clientStatus = status;
 
     }
-    public void requestRide(Ride ride){
 
-    dataBaseSystem.rideRequests.add(ride);
-
-    }
 
 }
