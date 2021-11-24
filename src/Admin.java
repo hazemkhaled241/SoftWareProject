@@ -27,5 +27,9 @@ public class Admin extends User {
 
     }
 
+    public void rejectDriverRequest(Integer index){
+        dataBaseSystem.pendingDrivers.remove(index-1);
+    }
+
 
 }

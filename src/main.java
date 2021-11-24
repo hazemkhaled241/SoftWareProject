@@ -3,111 +3,150 @@ import java.util.Scanner;
 public class main {
 
 
-    public static void main(String[] args) {
+    public static void main ( String[] args ) {
         // write your code here
         //Client client=new Client("hazem","123456");
         //Driver driver=new Driver ("mohamed","mohmedk112@gmail.com","258963","123456789","123456");
         //driver.addDriver();
-        DataBaseSystem dataBaseSystem = DataBaseSystem.getInstance();
-        dataBaseSystem.addAdmin();
+        DataBaseSystem dataBaseSystem = DataBaseSystem.getInstance ( );
+        dataBaseSystem.addAdmin ( );
 
 
-        Scanner scan = new Scanner(System.in);
-        while (true) {
+        Scanner scan = new Scanner ( System.in );
+        while ( true ) {
 
-            System.out.println("Choose 1-SingUp \n 2-SingIn");
-            scan = new Scanner(System.in);
-            String userChoice = scan.nextLine();
-            if (userChoice.equals("1")) { // SignUp
-                System.out.println("Enter as 1-Client \n 2-Driver ");
-                String userChoice2 = scan.nextLine();
-                if (userChoice2.equals("1")) {//client
-                    System.out.println("Enter userName, email(optional), password respectively");
-                    String userName = scan.nextLine();
-                    String email = scan.nextLine();
-                    String password = scan.nextLine();
-                    Client client1 = new Client(userName, password);
-                    client1.setEmail(email);
-                    dataBaseSystem.addClient(client1);
-                    System.out.println("");
+            System.out.println ( "Choose 1-SingUp \n 2-SingIn" );
+            scan = new Scanner ( System.in );
+            String userChoice = scan.nextLine ( );
+            if ( userChoice.equals ( "1" ) ) { // SignUp
+                System.out.println ( "Enter as 1-Client \n 2-Driver " );
+                String userChoice2 = scan.nextLine ( );
+                if ( userChoice2.equals ( "1" ) ) {//client
+                    System.out.println ( "Enter userName, email(optional), password respectively" );
+                    String userName = scan.nextLine ( );
+                    String email = scan.nextLine ( );
+                    String password = scan.nextLine ( );
+                    Client client1 = new Client ( userName ,password );
+                    client1.setEmail ( email );
+                    dataBaseSystem.addClient ( client1 );
+                    System.out.println ( "" );
 
                     continue;
                     // enter the system
-                } else if (userChoice2.equals("2")) {//Driver
-                    System.out.println("Enter userName, email(optional), password, nationalId, driverLicense respectively");
-                    String userName = scan.nextLine();
-                    String email = scan.nextLine();
-                    String password = scan.nextLine();
-                    String nationalId = scan.nextLine();
-                    String driverLicense = scan.nextLine();
-                    Driver driver1 = new Driver(userName, password, nationalId, driverLicense);
-                    driver1.setEmail(email);
-                    dataBaseSystem.addDriver(driver1); // add to pending list
+                } else if ( userChoice2.equals ( "2" ) ) {//Driver
+                    System.out.println ( "Enter userName, email(optional), password, nationalId, driverLicense respectively" );
+                    String userName = scan.nextLine ( );
+                    String email = scan.nextLine ( );
+                    String password = scan.nextLine ( );
+                    String nationalId = scan.nextLine ( );
+                    String driverLicense = scan.nextLine ( );
+                    Driver driver1 = new Driver ( userName ,password ,nationalId ,driverLicense );
+                    driver1.setEmail ( email );
+                    dataBaseSystem.addDriver ( driver1 ); // add to pending list
 
-                    System.out.println("Registration request send successfully, please wait until reviewing your request");
+                    System.out.println ( "Registration request send successfully, please wait until reviewing your request" );
                     continue;
                 } else { // enter valid number
-                    System.out.println("inValid Number");
+                    System.out.println ( "inValid Number" );
                 }
             }
 
             //                         ----SignIn----                          //
 
-            else if (userChoice.equals("2")) {
-                System.out.println("Enter as 1-Client \n 2-Driver \n 3-Admin");
-                String userChoice2 = scan.nextLine();
+            else if ( userChoice.equals ( "2" ) ) {
+                System.out.println ( "Enter as 1-Client \n 2-Driver \n 3-Admin" );
+                String userChoice2 = scan.nextLine ( );
 
                 //                         AS client
 
-                if (userChoice2.equals("1")) {
-                    System.out.println("Enter userName, password respectively");
-                    String userName = scan.nextLine();
-                    String password = scan.nextLine();
-                    Client client = dataBaseSystem.searchForClient(new Client(userName, password));
-                    if (client.getUserName().equals("-1")) {
-                        System.out.println("user not found");
+                if ( userChoice2.equals ( "1" ) ) {
+                    System.out.println ( "Enter userName, password respectively" );
+                    String userName = scan.nextLine ( );
+                    String password = scan.nextLine ( );
+                    Client client = dataBaseSystem.searchForClient ( new Client ( userName ,password ) );
+                    if ( client.getUserName ( ).equals ( "-1" ) ) {
+                        System.out.println ( "user not found" );
                         continue;
                     }
                     // enter to system as client   (client list)
 
-                    if (dataBaseSystem.searchForUser(client)) {
-                        System.out.println(" Welcome " + client.getUserName());
-                        while (true) {
-                            System.out.println(" 1- Pick a ride ");
-                            System.out.println(" 2-Notification");
-                            System.out.println(" 3-Logout");
-                            int clientChoice1 = scan.nextInt();
-                            if (clientChoice1 == 1) {
-                                System.out.println("Enter source and destination of the ride respectively");
-                                scan = new Scanner(System.in);
-                                String sourceRide = scan.nextLine();
-                                String destination = scan.nextLine();
-                                Ride clientRide = new Ride(sourceRide, destination);
-                                dataBaseSystem.addRideRequest(clientRide, client);
-                                dataBaseSystem.matchRidesWithDrivers();
+                    if ( dataBaseSystem.searchForUser ( client ) ) {
+                        System.out.println ( " Welcome " + client.getUserName ( ) );
 
-                            } else if (clientChoice1 == 2) {
-                                Ride clientRide = dataBaseSystem.searchForClientRide(client);
-                                if (clientRide.getSource().equals("-1")) {
-                                    System.out.println("No Notifications");
+
+                        while ( true ) {
+                            System.out.println ( " 1-Pick a ride " );
+                            System.out.println ( " 2-Notification" );
+                            System.out.println ( " 3-Logout" );
+                            System.out.println ( " 4-My finished rides" );
+
+                            int clientChoice1 = scan.nextInt ( );
+
+
+                            // when user press 1 to pick a ride we first make sure that
+                            // there are no other active rides for that user
+
+
+                            if ( clientChoice1 == 1 ) {
+
+                                if ( client.count == 0 ) {
+
+                                    System.out.println ( "Enter source and destination of the ride respectively" );
+                                    scan = new Scanner ( System.in );
+                                    String sourceRide = scan.nextLine ( );
+                                    String destination = scan.nextLine ( );
+                                    Ride clientRide = new Ride ( sourceRide ,destination );
+                                    dataBaseSystem.addRideRequest ( clientRide ,client );
+
+                                    // check if there are available drivers at system or not
+
+                                    if ( dataBaseSystem.matchRidesWithDrivers ( ) ) {
+                                        System.out.println ( " Looking for drivers " );
+                                        continue;
+                                    } else {
+                                        System.out.println ( " There are no drivers available right now please try again later " );
+                                        continue;
+                                    }
+                                } else {
+                                    scan = new Scanner ( System.in );
+                                    System.out.println ( "There is another active ride please end that ride first " );
+                                    System.out.println ( "1-Back" );
+                                    int clientChoose = scan.nextInt ( );
+
+                                    if ( clientChoose == 1 ) {
+                                        continue;
+                                    }
+                                }
+
+                            } else if ( clientChoice1 == 2 ) {
+                                scan = new Scanner ( System.in );
+                                Ride clientRide = dataBaseSystem.searchForClientRide ( client );
+                                if ( clientRide.getSource ( ).equals ( "-1" ) ) {
+                                    System.out.println ( "No Notifications" );
                                     continue;
                                 }
-                                System.out.println("The driver offer you " + clientRide.getPrice() + " LE for yor ride");
-                                System.out.println("press 1 to accept, press any else key to reject");
+                                System.out.println ( "The driver offer you " + clientRide.getPrice ( ) + " LE for yor ride" );
+                                System.out.println ( "press 1 to accept, press any else key to reject" );
 
-                                String choose = scan.nextLine();
-                                if (choose.equals("1")) {
-                                    clientRide.getDriver().setIsAvailable(false);
-                                    clientRide.driver.getRequestedRides().remove(clientRide); // to delete the accepted ride from the driver list
-                                    System.out.println("driver is coming to you");
-                                    if(clientRide.driver.getIsAvailable()){
-                                        System.out.println("You have been arrived successfully");
-                                        System.out.println("1-Rate Driver");
-                                        System.out.println("2-back to main menu");
+                                String choose = scan.nextLine ( );
+
+                                // client accept the driver's offer
+
+                                if ( choose.equals ( "1" ) ) {
+                                    clientRide.getClient ( ).count = 1;
+                                    clientRide.getDriver ( ).setIsAvailable ( false );
+                                    clientRide.driver.getRequestedRides ( ).remove ( clientRide ); // to delete the accepted ride from the driver list
+                                    System.out.println ( "driver is coming to you" );
+
+                                    ////////////////////////////////////////////////////////////////////////
+                                    if ( clientRide.driver.getIsAvailable ( ) ) {
+                                        System.out.println ( "You have been arrived successfully" );
+                                        System.out.println ( "1-Rate Driver" );
+                                        System.out.println ( "2-back to main menu" );
 //                                        scan = new Scanner(System.in);
 //                                        String rateChoice = scan.nextLine();
-                                        //////////////////////////////////////////
-                                        // we will add another option to client to be able to list all teh finished rides so he can rate them or delete them
+                                        ////////////////////////////////////////////////////////////////////////
+                                        // we will add another option to client to be able to list all of finished rides so he can rate them or delete them
                                         // average rate for driver
                                         // create arraylist in driver to be able to show all users rates
                                         // handle menu
@@ -117,81 +156,82 @@ public class main {
                                         // github link
                                         // sprint 1 doc
                                     }
-                                }
-                                else {
-                                    dataBaseSystem.rideRequests.remove(clientRide);
+                                } else {
+                                    dataBaseSystem.rideRequests.remove ( clientRide );
                                     continue;
                                 }
 
-                            } else if (clientChoice1 == 3) {
+                            } else if ( clientChoice1 == 3 ) {
                                 break;
 
                                 // client is waiting for the requested ride being accepted
                                 // by a driver that will set offer for this ride
 
                             } else
-                                System.out.println("not found");
+                                System.out.println ( "not found" );
                             break;
                         }
                     }
-                } else if (userChoice2.equals("2")) {//Driver
-                    System.out.println("Enter userName, password respectively");
-                    String userName = scan.nextLine();
-                    String password = scan.nextLine();
-                    Driver driver = dataBaseSystem.searchForDriver(new Driver(userName, password));
-                    if (driver.getUserName().equals("-1")) {
-                        System.out.println("Driver not found");
+                } else if ( userChoice2.equals ( "2" ) ) {//Driver
+                    System.out.println ( "Enter userName, password respectively" );
+                    String userName = scan.nextLine ( );
+                    String password = scan.nextLine ( );
+                    Driver driver = dataBaseSystem.searchForDriver ( new Driver ( userName ,password ) );
+                    if ( driver.getUserName ( ).equals ( "-1" ) ) {
+                        System.out.println ( "Driver not found" );
                         continue;
                     }
-                    if (dataBaseSystem.searchForUser(driver)){
-                        System.out.println("Welcome driver " + userName); // enter to system as driver
+                    if ( dataBaseSystem.searchForUser ( driver ) ) {
+                        System.out.println ( "Welcome driver " + userName ); // enter to system as driver
 
-                        while (true) {
-                            System.out.println("1-show favourite places");
-                            System.out.println("2-add favourite place");
-                            System.out.println("3-show requested rides that matches your favourite place");
-                            System.out.println("4-show clients rate");
-                            System.out.println("5-logout");
-                            int driverChoice1 = scan.nextInt();
+                        while ( true ) {
+                            System.out.println ( "1-show favourite places" );
+                            System.out.println ( "2-add favourite place" );
+                            System.out.println ( "3-show requested rides that matches your favourite place" );
+                            System.out.println ( "4-show clients rate" );
+                            System.out.println ( "5-logout" );
+                            int driverChoice1 = scan.nextInt ( );
 
 
-                            if (driverChoice1 == 1) { // show favourite places
-                                dataBaseSystem.showDriverFavouritePlaces(driver);
-                                System.out.println("1- back to main menu");
-                                int driverChoice2 = scan.nextInt();
-                                if (driverChoice2 == 1) {
+                            if ( driverChoice1 == 1 ) { // show favourite places
+                                dataBaseSystem.showDriverFavouritePlaces ( driver );
+                                System.out.println ( "1- back to main menu" );
+                                int driverChoice2 = scan.nextInt ( );
+                                if ( driverChoice2 == 1 ) {
                                     continue;
                                 }
-                            } else if (driverChoice1 == 2) {
+                            } else if ( driverChoice1 == 2 ) {
 
-                                scan = new Scanner(System.in);
-                                System.out.println("enter your favourite place");
-                                String driverFavouritePlace = scan.nextLine();
+                                scan = new Scanner ( System.in );
+                                System.out.println ( "enter your favourite place" );
+                                String driverFavouritePlace = scan.nextLine ( );
 
-                                driver.addFavouriteArea(driverFavouritePlace);
-                                System.out.println("Added successfully");
+                                driver.addFavouriteArea ( driverFavouritePlace );
+                                System.out.println ( "Added successfully" );
 
-                                System.out.println("1- back to main menu");
-                                int driverChoice2 = scan.nextInt();
-                                if (driverChoice2 == 1) {
+                                System.out.println ( "1- back to main menu" );
+                                int driverChoice2 = scan.nextInt ( );
+                                if ( driverChoice2 == 1 ) {
                                     continue;
                                 }
-                            }
-                            else if (driverChoice1 == 3) {
-                                dataBaseSystem.showMatchedRides(driver);
-                                System.out.println("choose ride");
-                                int rideNumber = scan.nextInt();
-                                Ride ride = driver.getRequestedRides().get(rideNumber - 1);
-                                System.out.println("1-Set offer to ride");
-                                System.out.println("2-Reject Ride");
-                                System.out.println("3-Back to main menu");
-                                int driverChoice2 = scan.nextInt();
-                                if (driverChoice2 == 1) {
-                                    System.out.println("Enter ride offer:");
-                                    double driverOffer = scan.nextDouble();
-                                    ride.setPrice(driverOffer);
-                                    ride.setDriver(driver);
-                                    System.out.println("offer set and send to user successfully");
+                            } else if ( driverChoice1 == 3 ) {
+                                dataBaseSystem.showMatchedRides ( driver );
+                                System.out.println ( "choose ride" );
+                                int rideNumber = scan.nextInt ( );
+                                Ride ride = driver.getRequestedRides ( ).get ( rideNumber - 1 );
+                                System.out.println ( "1-Set offer to ride" );
+                                System.out.println ( "2-Reject Ride" );
+                                System.out.println ( "3-Back to main menu" );
+                                int driverChoice2 = scan.nextInt ( );
+                                if ( driverChoice2 == 1 ) {
+                                    System.out.println ( "Enter ride offer:" );
+                                    double driverOffer = scan.nextDouble ( );
+                                    ride.setPrice ( driverOffer );
+                                    ride.setDriver ( driver );
+                                    System.out.println ( "offer set and send to user successfully" );
+
+                                    /////////////////////////////////////////////////////////////
+                                    /*
                                     if(!driver.getIsAvailable()){
                                         scan = new Scanner(System.in);
                                         System.out.println("offer Accepted ");
@@ -202,88 +242,114 @@ public class main {
                                             driver.setDriverStatus(true);
                                             System.out.println("ride ended successfully");
                                         }
-                                    }
-
-
-                                }
-                                else if (driverChoice2 == 2) {
-                                    driver.getRequestedRides().remove(ride);
-                                    System.out.println("Ride Rejected");
-                                }
-                                else if (driverChoice2 == 3) {
+                                    }*/
+                                    //////////////////////////////////////////////////////////////
+                                } else if ( driverChoice2 == 2 ) {
+                                    driver.getRequestedRides ( ).remove ( ride );
+                                    System.out.println ( "Ride Rejected" );
+                                } else if ( driverChoice2 == 3 ) {
 
                                 }
-                            }
-                            else if (driverChoice1 == 4) {
+                            } else if ( driverChoice1 == 4 ) {
 
-                            }
-                            else if (driverChoice1 == 5) {
+                            } else if ( driverChoice1 == 5 ) {
 
                                 break;
                             }
                         }
+                    } else {
+                        System.out.println ( "not found" );
                     }
 
-                    else
-                        System.out.println("not found");
+                } else if ( userChoice2.equals ( "3" ) ) { //admin
+                    System.out.println ( "Enter userName, password respectively" );
+                    String userName = scan.nextLine ( );
+                    String password = scan.nextLine ( );
+                    Admin admin = new Admin ( userName ,password );
+                    if ( dataBaseSystem.searchForUser ( admin ) ) {
+                        System.out.println ( "welcome" ); // enter to system as driver
 
-                } else if (userChoice2.equals("3")) { //admin
-                    System.out.println("Enter userName, password respectively");
-                    String userName = scan.nextLine();
-                    String password = scan.nextLine();
-                    Admin admin = new Admin(userName, password);
-                    if (dataBaseSystem.searchForUser(admin)) {
-                        System.out.println("welcome"); // enter to system as driver
-                        System.out.println("1-show list of driver pending requests");
-                        System.out.println("2-Suspend / unSuspend client");
-                        System.out.println("3-Suspend / unSuspend driver");
+                        while ( true ) {
 
-                        String userChoice3 = scan.nextLine();
-                        if (userChoice3.equals("1")) {
-                            if (dataBaseSystem.showPendingRequests()) {
-                                System.out.println("choose driver number to accept request");
-                                Integer userChoice4 = scan.nextInt();
-                                admin.acceptDriverRequest(userChoice4);
-                            } else {
-                                continue;
-                            }
-                        } else if (userChoice3.equals("2")) {
-                            if (dataBaseSystem.showClientsList()) {
-                                System.out.println(" Choose a client to be 1-Suspended / 2-unSuspended");
-                                int adminChoice = scan.nextInt();
+                            System.out.println ( "1-show list of driver pending requests" );
+                            System.out.println ( "2-Suspend / unSuspend client" );
+                            System.out.println ( "3-Suspend / unSuspend driver" );
+                            System.out.println ( "4-LogOut" );
 
-                                if (adminChoice == 1) {
-                                    System.out.println(" Enter client number ");
-                                    int clientID = scan.nextInt();
-                                    admin.suspendClient(clientID);
-                                } else if (adminChoice == 2) {
-                                    System.out.println(" Enter client number ");
-                                    int clientID = scan.nextInt();
-                                    admin.unSuspendClient(clientID);
+                            String userChoice3 = scan.nextLine ( );
+                            if ( userChoice3.equals ( "1" ) ) {
+                                scan = new Scanner ( System.in );
+                                if ( dataBaseSystem.showPendingRequests ( ) ) {
+                                    System.out.println ( "choose driver number to accept or reject his request" );
+                                    Integer userChoice4 = scan.nextInt ( );
+                                    System.out.println ( "1- Accept request " );
+                                    System.out.println ( "2- Reject request " );
+
+                                    scan = new Scanner ( System.in );
+                                    String adminDecision = scan.nextLine ( );
+
+
+                                    // admin choose to accept driver's request.
+
+                                    if ( adminDecision.equals ( "1" ) ) {
+                                        admin.acceptDriverRequest ( userChoice4 );
+                                        continue;
+                                    }
+
+                                    // admin choose to reject driver's request
+
+                                    else if ( adminDecision.equals ( "2" ) ) {
+                                        admin.rejectDriverRequest ( userChoice4 );
+                                        continue;
+                                    }
+
+                                } else {
+                                    continue;
                                 }
-                            } else {
-                                continue;
-                            }
-                        } else if (userChoice3.equals("3")) {
-                            if (dataBaseSystem.showActiveDrivers()) {
-                                System.out.println(" Choose a client to be 1-Suspended / 2-unSuspended");
-                                int adminChoice = scan.nextInt();
+                            } else if ( userChoice3.equals ( "2" ) ) {
+                                if ( dataBaseSystem.showClientsList ( ) ) {
+                                    System.out.println ( " Choose a client to be 1-Suspended / 2-unSuspended" );
+                                    int adminChoice = scan.nextInt ( );
 
-                                if (adminChoice == 1) {
-                                    System.out.println(" Enter Driver number ");
-                                    int driverID = scan.nextInt();
-                                    admin.suspendDriver(driverID);
-                                } else if (adminChoice == 2) {
-                                    System.out.println(" Enter client number ");
-                                    int driverID = scan.nextInt();
-                                    admin.unSuspendDriver(driverID);
+                                    if ( adminChoice == 1 ) {
+                                        System.out.println ( " Enter client number " );
+                                        int clientID = scan.nextInt ( );
+                                        admin.suspendClient ( clientID );
+                                        continue;
+                                    } else if ( adminChoice == 2 ) {
+                                        System.out.println ( " Enter client number " );
+                                        int clientID = scan.nextInt ( );
+                                        admin.unSuspendClient ( clientID );
+                                        continue;
+                                    }
+                                } else {
+                                    continue;
                                 }
-                            }
-                        } else { // enter valid number
+                            } else if ( userChoice3.equals ( "3" ) ) {
+                                if ( dataBaseSystem.showActiveDrivers ( ) ) {
+                                    System.out.println ( " Choose a client to be 1-Suspended / 2-unSuspended" );
+                                    int adminChoice = scan.nextInt ( );
 
+                                    if ( adminChoice == 1 ) {
+                                        System.out.println ( " Enter Driver number " );
+                                        int driverID = scan.nextInt ( );
+                                        admin.suspendDriver ( driverID );
+                                        continue;
+                                    } else if ( adminChoice == 2 ) {
+                                        System.out.println ( " Enter client number " );
+                                        int driverID = scan.nextInt ( );
+                                        admin.unSuspendDriver ( driverID );
+                                        continue;
+                                    }
+                                }
+                            } else if ( userChoice3.equals ( "4" ) ) {
+                                break;
+                            } else { // enter valid number
+                                System.out.println ( "Enter a valid number " );
+                            }
                         }
                     } else {
-                        System.out.println("not found");
+                        System.out.println ( "not found" );
                     }
                 }
 

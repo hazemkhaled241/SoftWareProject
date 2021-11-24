@@ -18,9 +18,7 @@ public class Ride {
         this.client = client;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
+    public Driver getDriver() { return driver; }
 
     public void setDriver(Driver driver) {
         this.driver = driver;

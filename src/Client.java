@@ -1,6 +1,13 @@
+import java.util.ArrayList;
+
 public class Client extends User {
+
+    ArrayList<Ride> finishedRides = new ArrayList<> ();
     Boolean clientStatus=true;
+    int count = 0 ;
+
     DataBaseSystem dataBaseSystem=DataBaseSystem.getInstance();
+
     public Client(String userName, String password) {
         super(userName, password);
     }
@@ -11,7 +18,6 @@ public class Client extends User {
 
     public void setStatus(Boolean status) {
         this.clientStatus = status;
-
     }
 
 

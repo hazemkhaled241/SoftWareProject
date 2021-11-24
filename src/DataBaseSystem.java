@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DataBaseSystem {
     ArrayList<Ride> rideRequests = new ArrayList<>();
@@ -133,17 +131,23 @@ public class DataBaseSystem {
     }
 
 
-    public void matchRidesWithDrivers() {
-        for (int i = 0; i < activeDrivers.size(); i++) {
-            boolean driverSource =false;
-            for (int j = counter; j < rideRequests.size(); j++) {
-                driverSource=activeDrivers.get(i).getFavouriteArea().contains(rideRequests.get(j).getSource());
-                if (driverSource) {
-                    activeDrivers.get(i).getRequestedRides().add(rideRequests.get(j));
+    public boolean matchRidesWithDrivers() {
+        if ( activeDrivers.isEmpty () ){
+            return false;
+        }
+        else {
+            for (int i = 0; i < activeDrivers.size ( ); i++) {
+                boolean driverSource = false;
+                for (int j = counter; j < rideRequests.size ( ); j++) {
+                    driverSource = activeDrivers.get ( i ).getFavouriteArea ( ).contains ( rideRequests.get ( j ).getSource ( ) );
+                    if ( driverSource ) {
+                        activeDrivers.get ( i ).getRequestedRides ( ).add ( rideRequests.get ( j ) );
+                    }
                 }
             }
+            counter ++;
+            return true;
         }
-        counter ++;
     }
 
     public void showMatchedRides(Driver driver) { // show matched rides to a specific driver
@@ -195,6 +199,28 @@ public class DataBaseSystem {
             }
         }
         return new Ride("-1","-1");
+    }
+
+    public boolean showFinishedRides(Client client)
+    {
+        if ( client.finishedRides.isEmpty ())
+        {
+            System.out.println ( " You have no finished rides right now " );
+            return false;
+        }
+        else
+        {
+            for (int i = 0 ; i < client.finishedRides.size () ; i++)
+            {
+                System.out.println ( client.finishedRides.get ( i ) );
+            }
+            return true;
+        }
+    }
+
+    public void addFinishedRide(Ride ride)
+    {
+        ride.getClient ().finishedRides.add ( ride );
     }
 
 }
