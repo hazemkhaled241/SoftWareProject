@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class DataBaseSystem {
+public class DataBaseSystem implements IDataBase {
     ArrayList<Ride> rideRequests = new ArrayList<>();
     ArrayList<Client> clients = new ArrayList<>();
     ArrayList<Driver> activeDrivers = new ArrayList<>();
@@ -29,12 +29,12 @@ public class DataBaseSystem {
         dataBaseSystem.pendingDrivers.add(driver);
 
     }
-
+    @Override
     public void acceptDriver(Driver driver) {
         driver.setDriverStatus(true);
         dataBaseSystem.activeDrivers.add(driver);
     }
-
+   @Override
     public Boolean searchForUser(User user) {
         if (user.getClass().equals(Client.class)) {
             for (int i = 0; i < clients.size(); i++) {
@@ -63,7 +63,7 @@ public class DataBaseSystem {
         }
         return false;
     }
-
+    @Override
     public void addAdmin() {
         dataBaseSystem.currAdmins.add(new Admin("hazem", "123456"));
         dataBaseSystem.currAdmins.add(new Admin("mohamed nasr", "123456"));
@@ -72,7 +72,7 @@ public class DataBaseSystem {
 
     }
 
-
+     @Override
     public boolean showPendingRequests(){
         if (pendingDrivers.isEmpty())
         {
@@ -91,7 +91,7 @@ public class DataBaseSystem {
             return true ;
         }
     }
-
+     @Override
     public boolean showClientsList()
     {
         if (clients.isEmpty())
@@ -108,7 +108,7 @@ public class DataBaseSystem {
             return true;
         }
     }
-
+      @Override
     public boolean showActiveDrivers(){
         if (activeDrivers.isEmpty())
         {
@@ -130,7 +130,7 @@ public class DataBaseSystem {
         }
     }
 
-
+    @Override
     public boolean matchRidesWithDrivers() {
         if ( activeDrivers.isEmpty () ){
             return false;
@@ -149,18 +149,20 @@ public class DataBaseSystem {
             return true;
         }
     }
-
+    @Override
     public void showMatchedRides(Driver driver) { // show matched rides to a specific driver
         for (int i = 0; i < driver.getRequestedRides().size(); i++) {
             System.out.println(i + 1 + "-" + driver.getRequestedRides().get(i).toString());
         }
     }
+    @Override
     public void addRideRequest(Ride ride ,Client client){
         ride.setClient(client);
         rideRequests.add(ride);
 
 
     }
+    @Override
     public void showDriverFavouritePlaces(Driver driver){
         if(driver.favouriteArea.isEmpty()){
             System.out.println("There are no favourite areas yet");
@@ -171,6 +173,7 @@ public class DataBaseSystem {
             }
         }
     }
+    @Override
     public Client searchForClient(Client client){
         for(int i =0;i<clients.size();i++){
            if (clients.get(i).getUserName().equals(client.getUserName())
@@ -180,6 +183,7 @@ public class DataBaseSystem {
         }
         return new Client("-1","-1");
     }
+    @Override
     public Driver searchForDriver(Driver driver){
         for(int i =0;i<activeDrivers.size();i++){
             if (activeDrivers.get(i).getUserName().equals(driver.getUserName())
@@ -189,7 +193,7 @@ public class DataBaseSystem {
         }
         return new Driver("-1","-1");
     }
-
+@Override
     public Ride searchForClientRide(Client client){
 
         for(int i =0;i<rideRequests.size();i++){
@@ -222,6 +226,7 @@ public class DataBaseSystem {
     {
         ride.getClient ().finishedRides.add ( ride );
     }
+    @Override
     public void showUserRate(Driver driver)
     {
         if(!driver.userRate.isEmpty()){
@@ -234,11 +239,13 @@ public class DataBaseSystem {
             System.out.println("there are no rate yet");
         }
     }
-    public void addUserRate(int rate,Driver driver)
+    @Override
+    public void addDriverRate(int rate,Driver driver)
     {
         driver.userRate.add(rate);
     }
-    public double avgUserRate(Driver driver)
+    @Override
+    public double avgDriverRate(Driver driver)
     {
      int sum=0;
      double avg=0;
