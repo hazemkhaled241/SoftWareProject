@@ -222,5 +222,33 @@ public class DataBaseSystem {
     {
         ride.getClient ().finishedRides.add ( ride );
     }
+    public void showUserRate(Driver driver)
+    {
+        if(!driver.userRate.isEmpty()){
+        for(int i=0;i<driver.userRate.size();i++){
+            System.out.println(driver.userRate.get(i));
+        }
+        }
+        else
+        {
+            System.out.println("there are no rate yet");
+        }
+    }
+    public void addUserRate(int rate,Driver driver)
+    {
+        driver.userRate.add(rate);
+    }
+    public double avgUserRate(Driver driver)
+    {
+     int sum=0;
+     double avg=0;
+
+        for(int i=0;i<driver.userRate.size();i++){
+            sum+=  driver.userRate.get(i);
+         }
+        avg=sum/driver.userRate.size();
+        return avg;
+    }
+
 
 }

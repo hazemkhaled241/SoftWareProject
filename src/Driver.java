@@ -7,6 +7,7 @@ public class Driver extends User {
     Boolean available = true;
     ArrayList<String> favouriteArea=new ArrayList<>() ;
     ArrayList<Ride> requestedRides=new ArrayList<>() ;
+    ArrayList<Integer> userRate=new ArrayList<>();
     public Driver(String userName, String password, String nationalId, String license) {
         super(userName, password);
         this.nationalId = nationalId;
