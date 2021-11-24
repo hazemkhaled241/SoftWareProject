@@ -241,7 +241,7 @@ public class main {
                         String userChoice3 = scan.nextLine();
                         if (userChoice3.equals("1")) {
                             if (dataBaseSystem.showPendingRequests()) {
-                                System.out.println("choose driver number to accept request"); // accept or reject driver request
+                                System.out.println("choose driver number to accept request");
                                 Integer userChoice4 = scan.nextInt();
                                 admin.acceptDriverRequest(userChoice4);
                             } else {
