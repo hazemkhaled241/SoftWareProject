@@ -8,6 +8,7 @@ public class DataBaseSystem {
     ArrayList<Driver> activeDrivers = new ArrayList<>();
     ArrayList<Driver> pendingDrivers = new ArrayList<>();
     ArrayList<Admin> currAdmins = new ArrayList<>();
+    public static int counter =0;
     private static DataBaseSystem dataBaseSystem = null;
 
     private DataBaseSystem() {
@@ -133,21 +134,21 @@ public class DataBaseSystem {
 
 
     public void matchRidesWithDrivers() {
-
         for (int i = 0; i < activeDrivers.size(); i++) {
             boolean driverSource =false;
-            for (int j = 0; j < rideRequests.size(); j++) {
+            for (int j = counter; j < rideRequests.size(); j++) {
                 driverSource=activeDrivers.get(i).getFavouriteArea().contains(rideRequests.get(j).getSource());
                 if (driverSource) {
                     activeDrivers.get(i).getRequestedRides().add(rideRequests.get(j));
                 }
             }
         }
+        counter ++;
     }
 
     public void showMatchedRides(Driver driver) { // show matched rides to a specific driver
         for (int i = 0; i < driver.getRequestedRides().size(); i++) {
-            System.out.println(i + 1 + "-" + driver.getRequestedRides().get(i));
+            System.out.println(i + 1 + "-" + driver.getRequestedRides().get(i).toString());
         }
     }
     public void addRideRequest(Ride ride ,Client client){
@@ -157,11 +158,43 @@ public class DataBaseSystem {
 
     }
     public void showDriverFavouritePlaces(Driver driver){
-        for(int i=0;i<driver.favouriteArea.size();i++){
-            System.out.println(i+1 + "-" + driver.favouriteArea.get(i));
+        if(driver.favouriteArea.isEmpty()){
+            System.out.println("There are no favourite areas yet");
         }
-
+        else {
+            for(int i=0;i<driver.favouriteArea.size();i++){
+                System.out.println(i+1 + "-" + driver.favouriteArea.get(i));
+            }
+        }
+    }
+    public Client searchForClient(Client client){
+        for(int i =0;i<clients.size();i++){
+           if (clients.get(i).getUserName().equals(client.getUserName())
+           && clients.get(i).getPassword().equals(client.getPassword())){
+                return clients.get(i);
+            }
+        }
+        return new Client("-1","-1");
+    }
+    public Driver searchForDriver(Driver driver){
+        for(int i =0;i<activeDrivers.size();i++){
+            if (activeDrivers.get(i).getUserName().equals(driver.getUserName())
+                    && activeDrivers.get(i).getPassword().equals(driver.getPassword())){
+                return activeDrivers.get(i);
+            }
+        }
+        return new Driver("-1","-1");
     }
 
+    public Ride searchForClientRide(Client client){
+
+        for(int i =0;i<rideRequests.size();i++){
+            if (rideRequests.get(i).client.getUserName().equals(client.getUserName())
+            && rideRequests.get(i).client.getPassword().equals(client.getPassword())){
+                return rideRequests.get(i);
+            }
+        }
+        return new Ride("-1","-1");
+    }
 
 }

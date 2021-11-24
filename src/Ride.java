@@ -49,4 +49,12 @@ public class Ride {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "source='" + source + '\'' +
+                ", destination='" + destination + '\'' +
+                '}';
+    }
 }
